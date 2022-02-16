@@ -76,10 +76,21 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         boolean isVertex = true;
         // if the edge is a new and valid edge.
         if (matrix[node1][node2] == null) {
-            matrix[node1][node2] = label;
-            ++edgeCount;
-            if (DEBUG) {
-                System.out.println("Adding Node [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+            if (directed) {
+                matrix[node1][node2] = label;
+                ++edgeCount;
+                if (DEBUG) {
+                    System.out.println("Adding Directed Edge ["
+                            + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                }
+            } else {
+                matrix[node1][node2] = label;
+                matrix[node2][node1] = label;
+                ++edgeCount;
+                if (DEBUG) {
+                    System.out.println("Adding Undirected Edge ["
+                            + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                }
             }
         } else {
             System.out.println("Node already exists.");
@@ -121,11 +132,22 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         boolean isVertex = true;
         // if the edge is a valid edge.
         if (matrix[node1][node2] != null) {
-            if (DEBUG) {
-                System.out.println("\nRemoving Node [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+            if (directed) {
+                if (DEBUG) {
+                    System.out.println("\nRemoving Directed Edge ["
+                            + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                }
+                matrix[node1][node2] = null;
+                --edgeCount;
+            } else {
+                if (DEBUG) {
+                    System.out.println("\nRemoving  Undirected Edge ["
+                            + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                }
+                matrix[node1][node2] = null;
+                matrix[node2][node1] = null;
+                --edgeCount;
             }
-            matrix[node1][node2] = null;
-            --edgeCount;
         } else {
             System.out.println("Node already exists.");
             exit(0);
@@ -135,7 +157,8 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         for(int index = 0; index < matrix.length; ++index) {
             if (matrix[node1][index] != null) {
                 if (DEBUG) {
-                    System.out.println("non-Decrementing nodeCount: [" + node1 + "][" + index +"]");
+                    System.out.println("non-Decrementing nodeCount: ["
+                            + node1 + "][" + index +"]");
                 }
                 isVertex = false;
                 break;
@@ -146,7 +169,7 @@ public class AdjacencyMatrix<T> implements Graph<T> {
                 System.out.println("Decrementing nodeCount because node1");
             }
             --nodeCount;
-            return; // no need to check again and double count on corner nodes
+            return; // no need to check node2 and double count on corner nodes
         }
         isVertex = true;
 
@@ -154,7 +177,8 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         for(int index = 0; index < matrix.length; ++index) {
             if (matrix[index][node2] != null) {
                 if (DEBUG) {
-                    System.out.println("non-Decrementing nodeCount: [" + index + "][" + node2 + "]");
+                    System.out.println("non-Decrementing nodeCount: ["
+                            + index + "][" + node2 + "]");
                 }
                 isVertex = false;
                 break;
@@ -179,12 +203,25 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     public void set(int node1, T label, int node2) {
         // if the edge is a valid edge.
         if (matrix[node1][node2] != null) {
-            matrix[node1][node2] = label;
-            if (DEBUG) {
-                System.out.println("\nSetting label between nodes: [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+            if (directed) {
+                matrix[node1][node2] = label;
+                if (DEBUG) {
+                    System.out.println("\nSetting label on Directed Edge: ["
+                            + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                }
+            } else {
+                matrix[node1][node2] = label;
+                matrix[node2][node1] = label;
+                if (DEBUG) {
+                    System.out.println("\nSetting label on Undirected Edge: ["
+                            + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                }
             }
         } else {
-            System.out.println("Node does not yet exist");
+            if (DEBUG) {
+                System.out.println("Edge does not exists: ["
+                        + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+            }
             exit(0);
         }
     }
@@ -201,11 +238,15 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         // if the edge is a valid edge.
         if (matrix[node1][node2] != null) {
             if (DEBUG) {
-                System.out.println("\nFetching edge label [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                System.out.println("\nFetching edge label: ["
+                        + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
             }
             return matrix[node1][node2];
         } else {
-            System.out.println("Node does not yet exist");
+            if (DEBUG) {
+                System.out.println("Failed to Fetch label: ["
+                        + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+            }
             return null;
         }
     }
@@ -217,12 +258,14 @@ public class AdjacencyMatrix<T> implements Graph<T> {
      * @param node2 Integer of matrix coordinate.
      * @return True if the graph contains an edge from node1 to node2 and
      *         false otherwise.
-     *    NOTE: If the graph is undirected, no directionality is implied by the edge.
+     *    NOTE: If the graph is undirected, no directionality is implied by
+     *          the edge.
      */
     public boolean hasEdge(int node1, int node2) {
         if (matrix[node1][node2] != null) {
             if (DEBUG) {
-                System.out.println("\nEdge found between nodes: [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                System.out.println("\nEdge found between nodes: ["
+                        + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
             }
             return true;
         }
