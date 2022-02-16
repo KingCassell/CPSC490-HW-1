@@ -1,8 +1,8 @@
 /* 
  * File: AdjacencyList.java
  * Date: Spring 2022
- * Auth: 
- * Desc: 
+ * Auth: Dustin Cassell
+ * Desc: Class for all of the adjacency list functionality for graphs
  */
 
 
