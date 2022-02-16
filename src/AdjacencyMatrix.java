@@ -282,9 +282,15 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         return null;
     }
 
-    // Returns all nodes on an outgoing edge (out-edge) from the given
-    // node. For an undirected graph, this method returns the same nodes
-    // as adjacent.
+
+    /**
+     * Purpose: Loop through and check each possible node that could be
+     *          traversed to from the provided node. If it has an edge
+     *          it is added to the list to be returned.
+     * @param node Integer value of the node to be checked.
+     * @return List of integers representing the nodes that this provided
+     *         node can traverse to.
+     */
     public List<Integer> outNodes(int node) {
         // TODO: fix the test and the undirected functionality.
         List<Integer> list = new ArrayList<>();
