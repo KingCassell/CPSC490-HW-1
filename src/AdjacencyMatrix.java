@@ -77,50 +77,49 @@ public class AdjacencyMatrix<T> implements Graph<T> {
      * @param node2 Integer of matrix coordinate.
      */
     public void add(int node1, T label, int node2) {
-        boolean isVertex = true;
+        boolean isNewNode = true;
         // if the edge is a new and valid edge.
         if (matrix[node1][node2] == null) {
             if (directed) {
                 matrix[node1][node2] = label;
-                ++edgeCount;
                 if (DEBUG) {
                     System.out.println("Adding Directed Edge ["
                             + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
                 }
-            } else {
+            } else { // Undirected
                 matrix[node1][node2] = label;
                 matrix[node2][node1] = label;
-                ++edgeCount;
                 if (DEBUG) {
                     System.out.println("Adding Undirected Edge ["
                             + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
                 }
             }
+            ++edgeCount;
         } else {
-            System.out.println("Node already exists.");
+            System.out.println("Failed Add... Node already exists.");
             exit(0);
         }
 
         // check if node1 is a new Vertex to count
         for(int index = 0; index < matrix.length; ++index) {
             if (matrix[node1][index] != null) {
-                isVertex = false;
+                isNewNode = false;
                 break;
             }
         }
-        if (isVertex) {
+        if (isNewNode) {
             ++nodeCount;
         }
-        isVertex = true;
 
         // check if node2 is a new Vertex to count
+        isNewNode = true;
         for(int index = 0; index < matrix.length; ++index) {
             if (matrix[index][node2] != null) {
-                isVertex = false;
+                isNewNode = false;
                 break;
             }
         }
-        if (isVertex) { // node2 is a new node
+        if (isNewNode) { // node2 is a new node
             ++nodeCount;
         }
     }
@@ -133,7 +132,7 @@ public class AdjacencyMatrix<T> implements Graph<T> {
      * @param node2 Integer of matrix coordinate.
      */
     public void remove(int node1, int node2) {
-        boolean isVertex = true;
+        boolean isNode = true;
         // if the edge is a valid edge.
         if (matrix[node1][node2] != null) {
             if (directed) {
@@ -142,7 +141,6 @@ public class AdjacencyMatrix<T> implements Graph<T> {
                             + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
                 }
                 matrix[node1][node2] = null;
-                --edgeCount;
             } else {
                 if (DEBUG) {
                     System.out.println("\nRemoving  Undirected Edge ["
@@ -150,10 +148,10 @@ public class AdjacencyMatrix<T> implements Graph<T> {
                 }
                 matrix[node1][node2] = null;
                 matrix[node2][node1] = null;
-                --edgeCount;
             }
+            --edgeCount;
         } else {
-            System.out.println("Node already exists.");
+            System.out.println("Failed Remove... Node already null.");
             exit(0);
         }
 
@@ -164,18 +162,18 @@ public class AdjacencyMatrix<T> implements Graph<T> {
                     System.out.println("non-Decrementing nodeCount: ["
                             + node1 + "][" + index +"]");
                 }
-                isVertex = false;
+                isNode = false;
                 break;
             }
         }
-        if (isVertex) {
+        if (isNode) {
             if (DEBUG) {
                 System.out.println("Decrementing nodeCount because node1");
             }
             --nodeCount;
             return; // no need to check node2 and double count on corner nodes
         }
-        isVertex = true;
+        isNode = true;
 
         // check if node2 is an empty Vertex to decrement count
         for(int index = 0; index < matrix.length; ++index) {
@@ -184,11 +182,11 @@ public class AdjacencyMatrix<T> implements Graph<T> {
                     System.out.println("non-Decrementing nodeCount: ["
                             + index + "][" + node2 + "]");
                 }
-                isVertex = false;
+                isNode = false;
                 break;
             }
         }
-        if (isVertex) { // node2 is a new node
+        if (isNode) { // node2 is a new node
             if (DEBUG) {
                 System.out.println("Decrementing nodeCount because node2");
             }
@@ -288,22 +286,23 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // node. For an undirected graph, this method returns the same nodes
     // as adjacent.
     public List<Integer> outNodes(int node) {
-        // TODO: make test for this method
+        // TODO: fix the test and the undirected functionality.
         List<Integer> list = new ArrayList<>();
         for (int index = 0; index < matrix.length; ++index) {
             if (directed) {
-                if (hasEdge(index, node)) {
-                    list.add(node);
+                if (hasEdge(node, index)) {
+                    list.add(index);
                     if (DEBUG) {
-                        System.out.println("\nInNode found: " + node);
+                        System.out.println("\nInNode found: "
+                                + node);
                     }
                 }
             } else { // Undirected
-                if (hasEdge(index, node)) {
+                if (hasEdge(node, index)) {
                     list.add(index);
-                    list.add(node);
                     if (DEBUG) {
-                        System.out.println("\nInNode found: " + index);
+                        System.out.println("\nInNode found: "
+                                + index + ", " + node);
                     }
                 }
             }
@@ -315,7 +314,7 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // node. For an undirected graph, this method returns the same nodes
     // as adjacent.
     public List<Integer> inNodes(int node) {
-        // TODO: make test for this method
+        // TODO: fix the test and the undirected functionality.
         List<Integer> list = new ArrayList<>();
         for (int index = 0; index < matrix.length; ++index) {
             if (directed) {
@@ -328,7 +327,6 @@ public class AdjacencyMatrix<T> implements Graph<T> {
             } else { // Undirected
                 if (hasEdge(index, node)) {
                     list.add(index);
-                    list.add(node);
                     if (DEBUG) {
                         System.out.println("\nInNode found: " + index);
                     }
