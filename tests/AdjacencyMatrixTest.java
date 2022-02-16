@@ -1,8 +1,8 @@
 /*
  * File: AdjacencyMatrixTest.java
  * Date: Spring 2022
- * Auth:
- * Desc:
+ * Auth: Dustin Cassell
+ * Desc: Tests for the graph Adjacency Matrix class
  */
 
 import org.junit.Test;
@@ -86,7 +86,7 @@ public class AdjacencyMatrixTest {
         Graph<Integer> g = new AdjacencyMatrix<>(0, true);
         assertEquals(0, g.nodeCount());
         assertEquals(0, g.edgeCount());
-        assertEquals(true, g.directed());
+        assertTrue(g.directed());
     }
 
     @Test
@@ -265,7 +265,7 @@ public class AdjacencyMatrixTest {
         Graph g = new AdjacencyMatrix(0, false);
         assertEquals(0, g.nodeCount());
         assertEquals(0, g.edgeCount());
-        assertEquals(false, g.directed());
+        assertFalse(g.directed());
     }
 
     @Test
