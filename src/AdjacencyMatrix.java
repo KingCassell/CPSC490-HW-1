@@ -292,7 +292,6 @@ public class AdjacencyMatrix<T> implements Graph<T> {
      *         node can traverse to.
      */
     public List<Integer> outNodes(int node) {
-        // TODO: fix the test and the undirected functionality.
         List<Integer> list = new ArrayList<>();
         for (int index = 0; index < matrix.length; ++index) {
             if (directed) {
