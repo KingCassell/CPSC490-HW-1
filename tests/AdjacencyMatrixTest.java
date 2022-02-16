@@ -290,7 +290,7 @@ public class AdjacencyMatrixTest {
   }
 
   @Test
-  public void checkSetNodeUndirectedGraph() {
+  public void checkSetLabelUndirectedGraph() {
     // fill the graph with the same add method test code.
     int n = 5;
     int l = 1; // label
@@ -321,14 +321,26 @@ public class AdjacencyMatrixTest {
   }
 
   @Test
-  public void checkLabelNodeUndirectedGraph() {
+  public void checkLabelEdgeUndirectedGraph() {
     int n = 5;
     int l = 42;
     Graph<Integer> g = new AdjacencyMatrix<>(n, true);
 
-    // fill the graph with some edges.
+    // fill the graph with some edges and check.
     g.add(0,l,0);
     assertEquals(l, g.label(0, 0).intValue());
+  }
+
+  @Test
+  public void checkHasEdgeUndirectedGraph() {
+    int n = 5;
+    int l = 42;
+    Graph<Integer> g = new AdjacencyMatrix<>(n, true);
+
+    // fill the graph with some edges and check.
+    g.add(0,l,0);
+    assertTrue(g.hasEdge(0, 0));
+    assertFalse(g.hasEdge(1, 1));
   }
 
 }

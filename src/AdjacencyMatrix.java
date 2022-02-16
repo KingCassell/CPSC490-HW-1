@@ -181,7 +181,7 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         if (matrix[node1][node2] != null) {
             matrix[node1][node2] = label;
             if (DEBUG) {
-                System.out.println("\nSetting Node [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                System.out.println("\nSetting label between nodes: [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
             }
         } else {
             System.out.println("Node does not yet exist");
@@ -189,14 +189,19 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         }
     }
 
-    // Returns the label on the give edge.
-    // Pre: the edge exists
+
+    /**
+     * Purpose: Fetches the value of the edge label given two coordinate
+     *          nodes.
+     * @param node1 Integer of matrix coordinate.
+     * @param node2 Integer of matrix coordinate.
+     * @return T type label to the given edge.
+     */
     public T label(int node1, int node2) {
-        // TODO: finish this method
         // if the edge is a valid edge.
         if (matrix[node1][node2] != null) {
             if (DEBUG) {
-                System.out.println("\nFetching Node [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                System.out.println("\nFetching edge label [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
             }
             return matrix[node1][node2];
         } else {
@@ -205,11 +210,22 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         }
     }
 
-    // Returns true if the graph contains an edge from node1 to node2
-    // and false otherwise. Note that if the graph is undirected, no
-    // directionality is implied by the edge.
+
+    /**
+     * Purpose: Determines if an edge exists at the provided coordinates.
+     * @param node1 Integer of matrix coordinate.
+     * @param node2 Integer of matrix coordinate.
+     * @return True if the graph contains an edge from node1 to node2 and
+     *         false otherwise.
+     *    NOTE: If the graph is undirected, no directionality is implied by the edge.
+     */
     public boolean hasEdge(int node1, int node2) {
-        // TODO: finish this method
+        if (matrix[node1][node2] != null) {
+            if (DEBUG) {
+                System.out.println("\nEdge found between nodes: [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+            }
+            return true;
+        }
         return false;
     }
 
