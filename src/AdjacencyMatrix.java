@@ -279,7 +279,27 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // edges, i.e., that lie on out-edges and in-edges.
     public List<Integer> adjacent(int node) {
         // TODO: finish this method
-        return null;
+        List<Integer> list = new ArrayList<>();
+        for (int index = 0; index < matrix.length; ++index) {
+            if (directed) {
+                if (hasEdge(node, index)) {
+                    list.add(index);
+                    if (DEBUG) {
+                        System.out.println("\nInNode found: "
+                                + node);
+                    }
+                }
+            } else { // Undirected
+                if (hasEdge(node, index)) {
+                    list.add(index);
+                    if (DEBUG) {
+                        System.out.println("\nInNode found: "
+                                + index + ", " + node);
+                    }
+                }
+            }
+        }
+        return list;
     }
 
 
