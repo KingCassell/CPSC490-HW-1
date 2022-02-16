@@ -170,15 +170,21 @@ public class AdjacencyMatrix<T> implements Graph<T> {
 
     // Updates the label for a given edge. If the edge does not exist,
     // the edge is not added.
+
+    /**
+     * Purpose: Set a provided node to a new label value only if the node
+     *          already exists.
+     * @param node1 Integer of matrix coordinate.
+     * @param label T type that adds a label to the given edge.
+     * @param node2 Integer of matrix coordinate.
+     */
     public void set(int node1, T label, int node2) {
-        // TODO: finish this method
         // if the edge is a valid edge.
         if (matrix[node1][node2] != null) {
+            matrix[node1][node2] = label;
             if (DEBUG) {
                 System.out.println("\nSetting Node [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
             }
-            matrix[node1][node2] = null;
-            --edgeCount;
         } else {
             System.out.println("Node does not yet exist");
             exit(0);
@@ -189,6 +195,7 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // Pre: the edge exists
     public T label(int node1, int node2) {
         // TODO: finish this method
+
         return matrix[node1][node2];
     }
 

@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -249,38 +250,31 @@ public class AdjacencyMatrixTest {
     int count;
     Graph<Integer> g = new AdjacencyMatrix<>(n, true);
 
-    // Fill the matrix
-    for (int u = 0; u < n; ++u)
-      for (int v = u + 1; v < n; ++v)
-        g.add(u, l++, v);
+    // Fill the matrix and check filling correctly.
+    for (int u = 0; u < n; ++u) {
+      for (int v = u + 1; v < n; ++v) {
+        g.add(u, l, v);
+        assertEquals(l, g.label(u, v).intValue());
+        ++l;
+      }
+    }
     g.add(n-1, l, 0);
+    assertEquals(l, g.label(n-1, 0).intValue());
     // check edge count
     assertEquals(1+(n*(n-1))/2, g.edgeCount());
     count = g.edgeCount();
 
-    // check to ensure matrix is full
-    l = 1;
-    for (int u = 0; u < n; ++u)
-      for (int v = u + 1; v < n; ++v)
-        assertEquals(l++, g.label(u, v).intValue());
-
-    // remove edges
+    // remove edges and check removing correctly.
     for (int u = 0; u < n; ++u) {
       for (int v = u + 1; v < n; ++v) {
         // remove each Vertex
         g.remove(u, v);
         assertEquals(--count, g.edgeCount());
+        assertNull(g.label(u, v));
       }
     }
     g.remove(n-1, 0);
-
-    // verify graph is truly empty
-    for (int u = 0; u < n; ++u)
-      for (int v = u + 1; v < n; ++v)
-        assertNull(g.label(u, v));
-
     assertEquals(0,g.edgeCount());
-
   }
 
   @Test
@@ -293,6 +287,37 @@ public class AdjacencyMatrixTest {
   public void checkInNodesUndirectedGraph() throws Exception {
     // make it fail intentionally ... remove to create the actual test
     assertTrue(false);
+  }
+
+  @Test
+  public void checkSetNodeUndirectedGraph() {
+    // fill the graph with the same add method test code.
+    int n = 5;
+    int l = 1; // label
+    Graph<Integer> g = new AdjacencyMatrix<>(n, true);
+
+    // Fill the matrix
+    for (int u = 0; u < n; ++u) {
+      for (int v = u + 1; v < n; ++v) {
+        g.add(u, l, v);
+        assertEquals(l, g.label(u, v).intValue());
+        ++l;
+      }
+    }
+    g.add(n-1, l, 0);
+    assertEquals(l, g.label(n-1, 0).intValue());
+    // check edge count
+    assertEquals(1+(n*(n-1))/2, g.edgeCount());
+
+    // verify set method works to overwrite existing nodes.
+    l = 42;
+    for (int u = 0; u < n; ++u) {
+      for (int v = u + 1; v < n; ++v) {
+        // remove each Vertex
+        g.set(u, l, v);
+        assertEquals(l, g.label(u, v).intValue());
+      }
+    }
   }
 
 }
