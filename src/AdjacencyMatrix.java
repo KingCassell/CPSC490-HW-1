@@ -59,10 +59,13 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // graph methods
     //--------------------------------------------------------------------
 
-    // Returns true if the graph is directed and false if undirected.
+    /**
+     * Purpose: Generic getter for whether the graph is directed or
+     *          undirected.
+     * @return True if directed, false if undirected.
+     */
     public boolean directed() {
-        // TODO: finish this method
-        return true;
+        return directed;
     }
 
 
