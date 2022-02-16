@@ -114,14 +114,14 @@ public class AdjacencyList<T> implements Graph<T> {
 
   // Returns the number of nodes in the graph
   public int nodeCount() {
-    return 0;
+    return nodeCount;
   }
 
   // Returns the number of edges in the graph. In a directed graph, it
   // returns the total number of directed edges. In an undirected
   // graph, it returns the number of undirected edges.
   public int edgeCount() {
-    return 0;
+    return edgeCount;
   }
 
 }
