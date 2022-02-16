@@ -5,12 +5,10 @@
  * Desc:
  */
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -51,6 +49,31 @@ public class AdjacencyMatrixTest {
                 assertEquals(l, g.label(u, v).intValue());
             }
         }
+    }
+
+
+    @Test
+    public void checkHasEdgeGraph() {
+        int n = 5;
+        int l = 42;
+        Graph<Integer> g = new AdjacencyMatrix<>(n, false);
+
+        // fill the graph with some edges and check.
+        g.add(0,l,0);
+        assertTrue(g.hasEdge(0, 0));
+        assertFalse(g.hasEdge(1, 1));
+    }
+
+
+    @Test
+    public void checkLabelEdgeGraph() {
+        int n = 5;
+        int l = 42;
+        Graph<Integer> g = new AdjacencyMatrix<>(n, false);
+
+        // fill the graph with some edges and check.
+        g.add(0,l,0);
+        assertEquals(l, g.label(0, 0).intValue());
     }
 
 
@@ -159,15 +182,18 @@ public class AdjacencyMatrixTest {
             for
   */
 
+    // tests that edges are removed properly and edgeCount updates correctly.
     @Test
     public void checkRemoveEdgesToDirectedGraph() throws Exception {
         // fill the graph with the same add method test code.
         int n = 5;
         int l = 1; // label
-        int count;
+        int count; // for edgeCount assertions at the end
         Graph<Integer> g = new AdjacencyMatrix<>(n, true);
 
         // Fill the matrix and check filling correctly.
+        // fills the upper right corner of the matrix excluding [0][0] and [4][4]
+        // format borrowed from add test.
         for (int u = 0; u < n; ++u) {
             for (int v = u + 1; v < n; ++v) {
                 g.add(u, l, v);
@@ -177,14 +203,16 @@ public class AdjacencyMatrixTest {
         }
         g.add(n-1, l, 0);
         assertEquals(l, g.label(n-1, 0).intValue());
-        // check edge count
+        // check edgeCount
         assertEquals(1+(n*(n-1))/2, g.edgeCount());
         count = g.edgeCount();
 
         // remove edges and check removing correctly.
+        // format borrowed from add test.
         for (int u = 0; u < n; ++u) {
             for (int v = u + 1; v < n; ++v) {
-                // remove each Vertex
+                // remove each Vertex and check if it removed
+                // and updated edgeCount correctly.
                 g.remove(u, v);
                 assertEquals(--count, g.edgeCount());
                 assertNull(g.label(u, v));
@@ -196,12 +224,33 @@ public class AdjacencyMatrixTest {
 
     @Test
     public void checkOutNodesDirectedGraph() throws Exception {
-        // make it fail intentionally ... remove to create the actual test
-        assertTrue(false);
+        int n = 10;
+        int l = 42;
+        ArrayList<Integer> list = new ArrayList<>();
+        Graph<Integer> g = new AdjacencyMatrix<>(n, true);
+
+        // fill with 10 incremented ints to test first row of graph.
+        for (int i = 1; i < 10; ++i)
+            list.add(i);
+
+        // fill the graph with edges.
+        for (int u = 0; u < n; ++u) {
+            for (int v = u + 1; v < n; ++v) {
+                g.add(u, l, v);
+                assertEquals(l, g.label(u, v).intValue());
+                // must check that it didn't label the other directional edge.
+                assertNull(g.label(v, u));
+            }
+        }
+        assertEquals(list,g.outNodes(0));
+        // this node shouldn't point to any other nodes.
+        list.clear(); // empty the test list to compare with empty returned list.
+        assertEquals(list, g.outNodes(9));
     }
 
     @Test
     public void checkInNodesDirectedGraph() throws Exception {
+        // TODO: finish this test
         // make it fail intentionally ... remove to create the actual test
         assertTrue(false);
     }
@@ -344,38 +393,57 @@ public class AdjacencyMatrixTest {
 
     @Test
     public void checkOutNodesUndirectedGraph() throws Exception {
-        // make it fail intentionally ... remove to create the actual test
-        assertTrue(false);
+        int n = 10;
+        int l = 42;
+        ArrayList<Integer> list = new ArrayList<>();
+        Graph<Integer> g = new AdjacencyMatrix<>(n, false);
+
+        // fill with 10 incremented ints to test first row of graph.
+        for (int i = 1; i < 10; ++i)
+            list.add(i);
+
+        // fill the graph with edges.
+        for (int u = 0; u < n; ++u) {
+            for (int v = u + 1; v < n; ++v) {
+                g.add(u, l, v);
+                assertEquals(l, g.label(u, v).intValue());
+                assertEquals(l, g.label(v, u).intValue());
+            }
+        }
+        assertEquals(list,g.outNodes(0));
+        // List must shift right one integer value for opposite
+        // side of matrix
+        list.remove(8);
+        list.add(0, 0);
+        assertEquals(list, g.outNodes(9));
     }
 
     @Test
     public void checkInNodesUndirectedGraph() throws Exception {
-        // make it fail intentionally ... remove to create the actual test
-        assertTrue(false);
-    }
-
-
-    @Test
-    public void checkLabelEdgeUndirectedGraph() {
-        int n = 5;
+        // TODO: finish this test
+        int n = 10;
         int l = 42;
-        Graph<Integer> g = new AdjacencyMatrix<>(n, true);
+        ArrayList<Integer> list = new ArrayList<>();
+        Graph<Integer> g = new AdjacencyMatrix<>(n, false);
 
-        // fill the graph with some edges and check.
-        g.add(0,l,0);
-        assertEquals(l, g.label(0, 0).intValue());
-    }
+        // fill with 10 incremented ints to test first row of graph.
+        for (int i = 1; i < 10; ++i)
+            list.add(i);
 
-    @Test
-    public void checkHasEdgeUndirectedGraph() {
-        int n = 5;
-        int l = 42;
-        Graph<Integer> g = new AdjacencyMatrix<>(n, true);
-
-        // fill the graph with some edges and check.
-        g.add(0,l,0);
-        assertTrue(g.hasEdge(0, 0));
-        assertFalse(g.hasEdge(1, 1));
+        // fill the graph with edges.
+        for (int u = 0; u < n; ++u) {
+            for (int v = u + 1; v < n; ++v) {
+                g.add(u, l, v);
+                assertEquals(l, g.label(u, v).intValue());
+                assertEquals(l, g.label(v, u).intValue());
+            }
+        }
+        assertEquals(list,g.outNodes(0));
+        // List must shift right one integer value for opposite
+        // side of matrix
+        list.remove(8);
+        list.add(0, 0);
+        assertEquals(list, g.outNodes(9));
     }
 
 }
