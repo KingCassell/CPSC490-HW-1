@@ -14,6 +14,7 @@
  *   (3) Fill out the file header above
  */
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.System.exit;
@@ -284,16 +285,54 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // node. For an undirected graph, this method returns the same nodes
     // as adjacent.
     public List<Integer> outNodes(int node) {
-        // TODO: finish this method
-        return null;
+        // TODO: make test for this method
+        List<Integer> list = new ArrayList<>();
+        for (int index = 0; index < matrix.length; ++index) {
+            if (directed) {
+                if (hasEdge(index, node)) {
+                    list.add(node);
+                    if (DEBUG) {
+                        System.out.println("\nInNode found: " + node);
+                    }
+                }
+            } else { // Undirected
+                if (hasEdge(index, node)) {
+                    list.add(index);
+                    list.add(node);
+                    if (DEBUG) {
+                        System.out.println("\nInNode found: " + index);
+                    }
+                }
+            }
+        }
+        return list;
     }
 
     // Returns all nodes on an incoming edge (in-edge) from the given
     // node. For an undirected graph, this method returns the same nodes
     // as adjacent.
     public List<Integer> inNodes(int node) {
-        // TODO: finish this method
-        return null;
+        // TODO: make test for this method
+        List<Integer> list = new ArrayList<>();
+        for (int index = 0; index < matrix.length; ++index) {
+            if (directed) {
+                if (hasEdge(index, node)) {
+                    list.add(index);
+                    if (DEBUG) {
+                        System.out.println("\nInNode found: " + index);
+                    }
+                }
+            } else { // Undirected
+                if (hasEdge(index, node)) {
+                    list.add(index);
+                    list.add(node);
+                    if (DEBUG) {
+                        System.out.println("\nInNode found: " + index);
+                    }
+                }
+            }
+        }
+        return list;
     }
 
 
