@@ -168,8 +168,6 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         }
     }
 
-    // Updates the label for a given edge. If the edge does not exist,
-    // the edge is not added.
 
     /**
      * Purpose: Set a provided node to a new label value only if the node
