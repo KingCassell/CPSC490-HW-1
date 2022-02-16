@@ -60,6 +60,7 @@ public class AdjacencyList<T> implements Graph<T> {
 
   // Returns true if the graph is directed and false if undirected.
   public boolean directed() {
+    // TODO: finish this method
     return false;
   }
 
@@ -67,20 +68,24 @@ public class AdjacencyList<T> implements Graph<T> {
   // the edge if valid nodes are given and the edge doesn't already
   // exist.
   public void add(int node1, T label, int node2) {
+    // TODO: finish this method
   }
 
   // Removes an edge from the graph if it exists
   public void remove(int node1, int node2) {
+    // TODO: finish this method
   }
 
   // Updates the label for a given edge. If the edge does not exist,
   // the edge is not added.
   public void set(int node1, T label, int node2) {
+    // TODO: finish this method
   }
 
   // Returns the label on the give edge.
   // Pre: the edge exists
   public T label(int node1, int node2) {
+    // TODO: finish this method
     return null;
   }
 
@@ -88,6 +93,7 @@ public class AdjacencyList<T> implements Graph<T> {
   // and false otherwise. Note that if the graph is undirected, no
   // directionality is implied by the edge.
   public boolean hasEdge(int node1, int node2) {
+    // TODO: finish this method
     return false;
   }
 
@@ -95,6 +101,7 @@ public class AdjacencyList<T> implements Graph<T> {
   // graph, this includes the set of nodes on outgoing and incoming
   // edges, i.e., that lie on out-edges and in-edges. 
   public List<Integer> adjacent(int node) {
+    // TODO: finish this method
     return null;
   }
 
@@ -102,6 +109,7 @@ public class AdjacencyList<T> implements Graph<T> {
   // node. For an undirected graph, this method returns the same nodes
   // as adjacent.
   public List<Integer> outNodes(int node) {
+    // TODO: finish this method
     return null;
   }
 
@@ -109,11 +117,13 @@ public class AdjacencyList<T> implements Graph<T> {
   // node. For an undirected graph, this method returns the same nodes
   // as adjacent. 
   public List<Integer> inNodes(int node) {
+    // TODO: finish this method
     return null;
   }
 
   // Returns the number of nodes in the graph
   public int nodeCount() {
+    // TODO: finish this method
     return nodeCount;
   }
 
@@ -121,6 +131,7 @@ public class AdjacencyList<T> implements Graph<T> {
   // returns the total number of directed edges. In an undirected
   // graph, it returns the number of undirected edges.
   public int edgeCount() {
+    // TODO: finish this method
     return edgeCount;
   }
 

@@ -42,8 +42,11 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // constructor
     //--------------------------------------------------------------------
 
-    // Initializes the graph with the given number of nodes and the
-    // given directionality.
+    /**
+     * Purpose: Primary Constructor for the AdjacencyMatrix class.
+     * @param nodeCount The number of nodes to be added to the graph.
+     * @param directed Provided Directionality of the graph.
+     */
     public AdjacencyMatrix(int nodeCount, boolean directed) {
         this.nodeCount = nodeCount;
         this.directed = directed;
@@ -57,12 +60,18 @@ public class AdjacencyMatrix<T> implements Graph<T> {
 
     // Returns true if the graph is directed and false if undirected.
     public boolean directed() {
+        // TODO: finish this method
         return true;
     }
 
-    // Adds a labeled edge to the graph from node1 to node2. Only adds
-    // the edge if valid nodes are given and the edge doesn't already
-    // exist.
+
+    /**
+     * Purpose: Adds a new edge value to the matrix if one is not already
+     *          in the provided matrix location.
+     * @param node1 Integer of matrix coordinate.
+     * @param label T type that adds a label to the given edge.
+     * @param node2 Integer of matrix coordinate.
+     */
     public void add(int node1, T label, int node2) {
         boolean isVertex = true;
         // if the edge is a new and valid edge.
@@ -70,9 +79,10 @@ public class AdjacencyMatrix<T> implements Graph<T> {
             matrix[node1][node2] = label;
             ++edgeCount;
             if (DEBUG) {
-                System.out.println("Adding Vertex [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                System.out.println("Adding Node [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
             }
         } else {
+            System.out.println("Node already exists.");
             exit(0);
         }
 
@@ -100,16 +110,25 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         }
     }
 
-    // Removes an edge from the graph if it exists
+
+    /**
+     * Purpose: remove the edges stored in the matrix if the edge exists
+     *          and updates the edgeCount and nodeCount variables.
+     * @param node1 Integer of matrix coordinate.
+     * @param node2 Integer of matrix coordinate.
+     */
     public void remove(int node1, int node2) {
         boolean isVertex = true;
         // if the edge is a valid edge.
         if (matrix[node1][node2] != null) {
             if (DEBUG) {
-                System.out.println("\nRemoving Vertex [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                System.out.println("\nRemoving Node [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
             }
             matrix[node1][node2] = null;
             --edgeCount;
+        } else {
+            System.out.println("Node already exists.");
+            exit(0);
         }
 
         // check if node1 is an empty Vertex to decrement count
@@ -152,11 +171,24 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // Updates the label for a given edge. If the edge does not exist,
     // the edge is not added.
     public void set(int node1, T label, int node2) {
+        // TODO: finish this method
+        // if the edge is a valid edge.
+        if (matrix[node1][node2] != null) {
+            if (DEBUG) {
+                System.out.println("\nSetting Node [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+            }
+            matrix[node1][node2] = null;
+            --edgeCount;
+        } else {
+            System.out.println("Node does not yet exist");
+            exit(0);
+        }
     }
 
     // Returns the label on the give edge.
     // Pre: the edge exists
     public T label(int node1, int node2) {
+        // TODO: finish this method
         return matrix[node1][node2];
     }
 
@@ -164,6 +196,7 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // and false otherwise. Note that if the graph is undirected, no
     // directionality is implied by the edge.
     public boolean hasEdge(int node1, int node2) {
+        // TODO: finish this method
         return false;
     }
 
@@ -171,6 +204,7 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // graph, this includes the set of nodes on outgoing and incoming
     // edges, i.e., that lie on out-edges and in-edges.
     public List<Integer> adjacent(int node) {
+        // TODO: finish this method
         return null;
     }
 
@@ -178,6 +212,7 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // node. For an undirected graph, this method returns the same nodes
     // as adjacent.
     public List<Integer> outNodes(int node) {
+        // TODO: finish this method
         return null;
     }
 
@@ -185,11 +220,13 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // node. For an undirected graph, this method returns the same nodes
     // as adjacent.
     public List<Integer> inNodes(int node) {
+        // TODO: finish this method
         return null;
     }
 
     // Returns the number of nodes in the graph
     public int nodeCount() {
+        // TODO: finish this method
         return nodeCount;
     }
 
@@ -197,6 +234,7 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // returns the total number of directed edges. In an undirected
     // graph, it returns the number of undirected edges.
     public int edgeCount() {
+        // TODO: finish this method
         return edgeCount;
     }
 
