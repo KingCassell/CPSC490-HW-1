@@ -14,10 +14,9 @@
  *   (3) Fill out the file header above
  */
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
+import static java.lang.System.exit;
 
 
 public class AdjacencyMatrix<T> implements Graph<T> {
@@ -36,7 +35,7 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     private T[][] matrix;
 
     // for debug print statements
-    private final boolean debugMode = false;
+    private final boolean DEBUG = true;
 
 
     //--------------------------------------------------------------------
@@ -70,12 +69,14 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         if (matrix[node1][node2] == null) {
             matrix[node1][node2] = label;
             ++edgeCount;
-            if (debugMode) {
-                System.out.println("node [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+            if (DEBUG) {
+                System.out.println("Adding Vertex [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
             }
+        } else {
+            exit(0);
         }
 
-        // check if node1 is a new node to count
+        // check if node1 is a new Vertex to count
         for(int index = 0; index < matrix.length; ++index) {
             if (matrix[node1][index] != null) {
                 isVertex = false;
@@ -87,7 +88,7 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         }
         isVertex = true;
 
-        // check if node2 is a new node to count
+        // check if node2 is a new Vertex to count
         for(int index = 0; index < matrix.length; ++index) {
             if (matrix[index][node2] != null) {
                 isVertex = false;
@@ -102,36 +103,49 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // Removes an edge from the graph if it exists
     public void remove(int node1, int node2) {
         boolean isVertex = true;
-        // if the edge is a new and valid edge.
+        // if the edge is a valid edge.
         if (matrix[node1][node2] != null) {
+            if (DEBUG) {
+                System.out.println("\nRemoving Vertex [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+            }
             matrix[node1][node2] = null;
             --edgeCount;
-            if (debugMode) {
-                System.out.println("node [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
-            }
         }
 
-        // check if node1 is a new node to count
+        // check if node1 is an empty Vertex to decrement count
         for(int index = 0; index < matrix.length; ++index) {
             if (matrix[node1][index] != null) {
+                if (DEBUG) {
+                    System.out.println("non-Decrementing nodeCount: [" + node1 + "][" + index +"]");
+                }
                 isVertex = false;
                 break;
             }
         }
         if (isVertex) {
-            ++nodeCount;
+            if (DEBUG) {
+                System.out.println("Decrementing nodeCount because node1");
+            }
+            --nodeCount;
+            return; // no need to check again and double count on corner nodes
         }
         isVertex = true;
 
-        // check if node2 is a new node to count
+        // check if node2 is an empty Vertex to decrement count
         for(int index = 0; index < matrix.length; ++index) {
             if (matrix[index][node2] != null) {
+                if (DEBUG) {
+                    System.out.println("non-Decrementing nodeCount: [" + index + "][" + node2 + "]");
+                }
                 isVertex = false;
                 break;
             }
         }
         if (isVertex) { // node2 is a new node
-            ++nodeCount;
+            if (DEBUG) {
+                System.out.println("Decrementing nodeCount because node2");
+            }
+            --nodeCount;
         }
     }
 

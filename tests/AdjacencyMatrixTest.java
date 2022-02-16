@@ -5,15 +5,13 @@
  * Desc: 
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 
 public class AdjacencyMatrixTest {
@@ -244,9 +242,45 @@ public class AdjacencyMatrixTest {
   }
 
   @Test
-  public void checkRemoveEdgesToUndirectedGraph() throws Exception {
-    // make it fail intentionally ... remove to create the actual test
-    assertTrue(false);
+  public void checkRemoveEdgesToUndirectedGraph() {
+    // fill the graph with the same add method test code.
+    int n = 5;
+    int l = 1; // label
+    int count;
+    Graph<Integer> g = new AdjacencyMatrix<>(n, true);
+
+    // Fill the matrix
+    for (int u = 0; u < n; ++u)
+      for (int v = u + 1; v < n; ++v)
+        g.add(u, l++, v);
+    g.add(n-1, l, 0);
+    // check edge count
+    assertEquals(1+(n*(n-1))/2, g.edgeCount());
+    count = g.edgeCount();
+
+    // check to ensure matrix is full
+    l = 1;
+    for (int u = 0; u < n; ++u)
+      for (int v = u + 1; v < n; ++v)
+        assertEquals(l++, g.label(u, v).intValue());
+
+    // remove edges
+    for (int u = 0; u < n; ++u) {
+      for (int v = u + 1; v < n; ++v) {
+        // remove each Vertex
+        g.remove(u, v);
+        assertEquals(--count, g.edgeCount());
+      }
+    }
+    g.remove(n-1, 0);
+
+    // verify graph is truly empty
+    for (int u = 0; u < n; ++u)
+      for (int v = u + 1; v < n; ++v)
+        assertNull(g.label(u, v));
+
+    assertEquals(0,g.edgeCount());
+
   }
 
   @Test
