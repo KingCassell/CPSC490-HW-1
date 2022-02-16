@@ -320,4 +320,15 @@ public class AdjacencyMatrixTest {
     }
   }
 
+  @Test
+  public void checkLabelNodeUndirectedGraph() {
+    int n = 5;
+    int l = 42;
+    Graph<Integer> g = new AdjacencyMatrix<>(n, true);
+
+    // fill the graph with some edges.
+    g.add(0,l,0);
+    assertEquals(l, g.label(0, 0).intValue());
+  }
+
 }

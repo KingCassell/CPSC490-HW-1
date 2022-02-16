@@ -193,8 +193,16 @@ public class AdjacencyMatrix<T> implements Graph<T> {
     // Pre: the edge exists
     public T label(int node1, int node2) {
         // TODO: finish this method
-
-        return matrix[node1][node2];
+        // if the edge is a valid edge.
+        if (matrix[node1][node2] != null) {
+            if (DEBUG) {
+                System.out.println("\nFetching Node [" + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+            }
+            return matrix[node1][node2];
+        } else {
+            System.out.println("Node does not yet exist");
+            return null;
+        }
     }
 
     // Returns true if the graph contains an edge from node1 to node2
