@@ -183,7 +183,6 @@ public class AdjacencyMatrixTest {
   */
 
 
-    // tests that edges are removed properly and edgeCount updates correctly.
     @Test
     public void checkRemoveEdgesToDirectedGraph() throws Exception {
         // fill the graph with the same add method test code.
@@ -223,8 +222,7 @@ public class AdjacencyMatrixTest {
         assertEquals(0,g.edgeCount());
     }
 
-    // Test empty graphs, full graphs and exclusively odd node value
-    // graphs for proper size
+
     @Test
     public void checkOutNodesDirectedGraph() throws Exception {
         int n = 10;
@@ -268,8 +266,7 @@ public class AdjacencyMatrixTest {
         }
     }
 
-    // Test empty graphs, full graphs and exclusively odd node value
-    // graphs for proper size
+
     @Test
     public void checkInNodesDirectedGraph() throws Exception {
         int n = 20;
@@ -494,7 +491,6 @@ public class AdjacencyMatrixTest {
 
     @Test
     public void checkInNodesUndirectedGraph() throws Exception {
-        // TODO: finish this test
         int n = 4;
         int l = 1;
         List<Integer> inNodes = new ArrayList<>();
