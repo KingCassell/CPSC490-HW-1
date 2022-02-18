@@ -182,6 +182,7 @@ public class AdjacencyMatrixTest {
             for
   */
 
+
     // tests that edges are removed properly and edgeCount updates correctly.
     @Test
     public void checkRemoveEdgesToDirectedGraph() throws Exception {
@@ -222,37 +223,92 @@ public class AdjacencyMatrixTest {
         assertEquals(0,g.edgeCount());
     }
 
+    // Test empty graphs, full graphs and exclusively odd node value
+    // graphs for proper size
     @Test
     public void checkOutNodesDirectedGraph() throws Exception {
         int n = 10;
-        int l = 42;
-        ArrayList<Integer> list = new ArrayList<>();
+        int l = 1;
+        List<Integer> adj = new ArrayList<>();
         Graph<Integer> g = new AdjacencyMatrix<>(n, true);
 
-        // fill with 10 incremented ints to test first row of graph.
-        for (int i = 1; i < 10; ++i)
-            list.add(i);
+        // Check empty graph
+        adj = g.outNodes(0);
+        assertEquals(0,adj.size());
 
-        // fill the graph with edges.
-        for (int u = 0; u < n; ++u) {
-            for (int v = u + 1; v < n; ++v) {
-                g.add(u, l, v);
-                assertEquals(l, g.label(u, v).intValue());
-                // must check that it didn't label the other directional edge.
-                assertNull(g.label(v, u));
+        // Check full graph
+        // fill so every node points to every other node, including itself
+        for (int row = 0; row < n; ++row) {
+            for (int column = 0; column < n; ++column) {
+                g.add(row, l++, column);
             }
         }
-        assertEquals(list,g.outNodes(0));
-        // this node shouldn't point to any other nodes.
-        list.clear(); // empty the test list to compare with empty returned list.
-        assertEquals(list, g.outNodes(9));
+        for (int index = 0; index < n; ++index) {
+            adj = g.outNodes(index);
+            // should return every node except self pointing nodes.
+            assertEquals(n, adj.size());
+        }
+
+        // unique graph missing even nodes
+        for (int row = 0; row < n; row++) {
+            for (int column = 0; column < n; column++) {
+                if ((row % 2 == 0 && column % 2 == 0)) {
+                    g.remove(row, column);
+                }
+            }
+        }
+        for (int index = 0; index < n; index++) {
+            if (index % 2 == 0) {
+                adj = g.outNodes(index);
+                assertEquals(n / 2, adj.size());
+            } else {
+                adj = g.outNodes(index);
+                assertEquals(n, adj.size());
+            }
+        }
     }
 
     @Test
     public void checkInNodesDirectedGraph() throws Exception {
-        // TODO: finish this test
-        // make it fail intentionally ... remove to create the actual test
-        assertTrue(false);
+        int n = 10;
+        int l = 1;
+        List<Integer> adj = new ArrayList<>();
+        Graph<Integer> g = new AdjacencyMatrix<>(n, true);
+
+        // Check empty graph
+        adj = g.adjacent(0);
+        assertEquals(0,adj.size());
+
+        // Check full graph
+        // fill so every node points to every other node, including itself
+        for (int row = 0; row < n; ++row) {
+            for (int column = 0; column < n; ++column) {
+                g.add(row, l++, column);
+            }
+        }
+        for (int index = 0; index < n; ++index) {
+            adj = g.adjacent(index);
+            // should return every node except self pointing nodes.
+            assertEquals(n, adj.size());
+        }
+
+        // unique graph missing even nodes
+        for (int row = 0; row < n; row++) {
+            for (int column = 0; column < n; column++) {
+                if ((row % 2 == 0 && column % 2 == 0)) {
+                    g.remove(row, column);
+                }
+            }
+        }
+        for (int index = 0; index < n; index++) {
+            if (index % 2 == 0) {
+                adj = g.adjacent(index);
+                assertEquals(n / 2, adj.size());
+            } else {
+                adj = g.adjacent(index);
+                assertEquals(n, adj.size());
+            }
+        }
     }
 
 
