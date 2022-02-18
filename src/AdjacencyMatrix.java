@@ -274,32 +274,63 @@ public class AdjacencyMatrix<T> implements Graph<T> {
         return false;
     }
 
-    // Returns all nodes adjacent to the given node. In a directed
-    // graph, this includes the set of nodes on outgoing and incoming
-    // edges, i.e., that lie on out-edges and in-edges.
+
+    /**
+     * Purpose: Finds all out and in nodes for a given node. The
+     *          matrix is checked using a for loop that checks
+     *          the possible node matches via the matrix column
+     *          and row index. If a value is stored in that matrix
+     *          address, the node index is added to a list. After
+     *          all possible adjacent nodes are found, the list is
+     *          looped through to delete any duplicate values. The
+     *          cleaned list is then returned.
+     * @param node Integer index of the node to be checked for
+     *             adjacent nodes.
+     * @return List of adjacent nodes.
+     */
     public List<Integer> adjacent(int node) {
-        // TODO: finish this method
-        List<Integer> list = new ArrayList<>();
+        List<Integer> adjacentNodes = new ArrayList<>();
         for (int index = 0; index < matrix.length; ++index) {
             if (directed) {
-                if (hasEdge(node, index)) {
-                    list.add(index);
+                if (hasEdge(index, node)) {
+                    adjacentNodes.add(index);
                     if (DEBUG) {
                         System.out.println("\nInNode found: "
                                 + node);
                     }
                 }
+                if (hasEdge(node, index)) {
+                    adjacentNodes.add(index);
+                    if (DEBUG) {
+                        System.out.println("\nOutNode found: "
+                                + node);
+                    }
+                }
             } else { // Undirected
                 if (hasEdge(node, index)) {
-                    list.add(index);
+                    adjacentNodes.add(index);
+                    adjacentNodes.add(node);
                     if (DEBUG) {
-                        System.out.println("\nInNode found: "
+                        System.out.println("\nNode found: "
                                 + index + ", " + node);
                     }
                 }
             }
         }
-        return list;
+        // loop through the adjacentNodes and remove any duplicate values.
+        for (int ptr = 0; ptr < adjacentNodes.size(); ++ptr) {
+            for (int index = ptr + 1; index < adjacentNodes.size(); ++index) {
+                if (adjacentNodes.get(ptr).equals(adjacentNodes.get(index))) {
+                    if (DEBUG) {
+                        System.out.println("\nList Duplicate found: "
+                                + adjacentNodes.get(index));
+                    }
+                    //noinspection SuspiciousListRemoveInLoop
+                    adjacentNodes.remove(index);
+                }
+            }
+        }
+        return adjacentNodes;
     }
 
 
@@ -312,6 +343,7 @@ public class AdjacencyMatrix<T> implements Graph<T> {
      *         node can traverse to.
      */
     public List<Integer> outNodes(int node) {
+        // TODO: fix this method and test.
         List<Integer> list = new ArrayList<>();
         for (int index = 0; index < matrix.length; ++index) {
             if (directed) {
