@@ -90,6 +90,8 @@ public class AdjacencyMatrix<T> implements Graph<T> {
                 if (DEBUG) {
                     System.out.println("Adding Undirected Edge ["
                             + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                    System.out.println("Adding Undirected Edge ["
+                            + node2 + "][" + node1 + "]: " + matrix[node2][node1]);
                 }
             }
             ++edgeCount;
@@ -143,6 +145,8 @@ public class AdjacencyMatrix<T> implements Graph<T> {
                 if (DEBUG) {
                     System.out.println("\nRemoving  Undirected Edge ["
                             + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                    System.out.println("Removing  Undirected Edge ["
+                            + node2 + "][" + node1 + "]: " + matrix[node2][node1]);
                 }
                 matrix[node1][node2] = null;
                 matrix[node2][node1] = null;
@@ -214,6 +218,8 @@ public class AdjacencyMatrix<T> implements Graph<T> {
                 matrix[node2][node1] = label;
                 if (DEBUG) {
                     System.out.println("\nSetting label on Undirected Edge: ["
+                            + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
+                    System.out.println("Setting label on Undirected Edge: ["
                             + node1 + "][" + node2 + "]: " + matrix[node1][node2]);
                 }
             }
@@ -316,15 +322,17 @@ public class AdjacencyMatrix<T> implements Graph<T> {
             }
         }
         // loop through the adjacentNodes and remove any duplicate values.
-        for (int ptr = 0; ptr < adjacentNodes.size(); ++ptr) {
-            for (int index = ptr + 1; index < adjacentNodes.size(); ++index) {
-                if (adjacentNodes.get(ptr).equals(adjacentNodes.get(index))) {
+        for (int index = 0; index < adjacentNodes.size(); ++index) {
+            for (int ptr = index + 1; ptr < adjacentNodes.size(); ++ptr) {
+                while (adjacentNodes.get(index).equals(adjacentNodes.get(ptr))) {
                     if (DEBUG) {
-                        System.out.println("\nList Duplicate found: "
-                                + adjacentNodes.get(index));
+                        System.out.println("Duplicate Removed: "
+                                + adjacentNodes + "   Removing index [" + ptr + "]");
                     }
-                    //noinspection SuspiciousListRemoveInLoop
-                    adjacentNodes.remove(index);
+                    adjacentNodes.remove(ptr);
+                    if (ptr >= adjacentNodes.size()) {
+                        break;
+                    }
                 }
             }
         }
@@ -341,7 +349,6 @@ public class AdjacencyMatrix<T> implements Graph<T> {
      *         node can traverse to.
      */
     public List<Integer> outNodes(int node) {
-        // TODO: fix this method and test.
         List<Integer> adjacentNodes = new ArrayList<>();
         for (int index = 0; index < matrix.length; ++index) {
             if (directed) {
@@ -364,15 +371,17 @@ public class AdjacencyMatrix<T> implements Graph<T> {
             }
         }
         // loop through the adjacentNodes and remove any duplicate values.
-        for (int ptr = 0; ptr < adjacentNodes.size(); ++ptr) {
-            for (int index = ptr + 1; index < adjacentNodes.size(); ++index) {
-                if (adjacentNodes.get(ptr).equals(adjacentNodes.get(index))) {
+        for (int index = 0; index < adjacentNodes.size(); ++index) {
+            for (int ptr = index + 1; ptr < adjacentNodes.size(); ++ptr) {
+                while (adjacentNodes.get(index).equals(adjacentNodes.get(ptr))) {
                     if (DEBUG) {
-                        System.out.println("\nList Duplicate found: "
-                                + adjacentNodes.get(index));
+                        System.out.println("Duplicate Removed: "
+                                + adjacentNodes + "   Removing index [" + ptr + "]");
                     }
-                    //noinspection SuspiciousListRemoveInLoop
-                    adjacentNodes.remove(index);
+                    adjacentNodes.remove(ptr);
+                    if (ptr >= adjacentNodes.size()) {
+                        break;
+                    }
                 }
             }
         }
