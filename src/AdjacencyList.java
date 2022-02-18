@@ -125,17 +125,22 @@ public class AdjacencyList<T> implements Graph<T> {
     return null;
   }
 
-  // Returns the number of nodes in the graph
+  /**
+   * Purpose: Generic getter for the number of nodes currently in the graph.
+   * @return Integer count of nodes in Graph.
+   */
   public int nodeCount() {
-    // TODO: finish this method
     return nodeCount;
   }
 
-  // Returns the number of edges in the graph. In a directed graph, it
-  // returns the total number of directed edges. In an undirected
-  // graph, it returns the number of undirected edges.
+  /**
+   * Purpose: Generic getter for the number of edges currently in the graph.
+   * @return Integer count of edges in Graph.
+   *    NOTE: In a directed graph, it returns the total number of directed
+   *          edges. In an undirected graph, it returns the number of
+   *          undirected edges.
+   */
   public int edgeCount() {
-    // TODO: finish this method
     return edgeCount;
   }
 
