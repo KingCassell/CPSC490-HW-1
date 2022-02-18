@@ -7,14 +7,6 @@
  */
 
 
-/* TODO:
- *   (1) Implement the functions below. Note some are "stubbed" out so
- *       that the code will compile. You will need to implement all of
- *       the functions (even those stubbed out).
- *   (2) Make sure your code is commented and well formatted
- *   (3) Fill out the file header above
- */
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -313,9 +305,8 @@ public class AdjacencyMatrix<T> implements Graph<T> {
             } else { // Undirected
                 if (hasEdge(node, index)) {
                     adjacentNodes.add(index);
-                    adjacentNodes.add(node);
                     if (DEBUG) {
-                        System.out.println("\nNode found: "
+                        System.out.println("\nNodes found: "
                                 + index + ", " + node);
                     }
                 }
@@ -341,19 +332,24 @@ public class AdjacencyMatrix<T> implements Graph<T> {
 
 
     /**
-     * Purpose: Loop through and check each possible node that could be
-     *          traversed to from the provided node. If it has an edge
-     *          it is added to the list to be returned.
-     * @param node Integer value of the node to be checked.
-     * @return List of integers representing the nodes that this provided
-     *         node can traverse to.
+     * Purpose: Finds all out and in nodes for a given node. The
+     *          matrix is checked using a for loop that checks
+     *          the possible node matches via the matrix column
+     *          and row index. If a value is stored in that matrix
+     *          address, the node index is added to a list. After
+     *          all possible adjacent nodes are found, the list is
+     *          looped through to delete any duplicate values. The
+     *          cleaned list is then returned.
+     * @param node Integer index of the node to be checked for
+     *             adjacent nodes.
+     * @return List of out nodes.
      */
     public List<Integer> outNodes(int node) {
-        List<Integer> adjacentNodes = new ArrayList<>();
+        List<Integer> outNodes = new ArrayList<>();
         for (int index = 0; index < matrix.length; ++index) {
             if (directed) {
                 if (hasEdge(node, index)) {
-                    adjacentNodes.add(index);
+                    outNodes.add(index);
                     if (DEBUG) {
                         System.out.println("\nDirected OutNode found: "
                                 + node);
@@ -361,80 +357,85 @@ public class AdjacencyMatrix<T> implements Graph<T> {
                 }
             } else { // Undirected
                 if (hasEdge(node, index)) {
-                    adjacentNodes.add(index);
-                    adjacentNodes.add(node);
+                    outNodes.add(index);
                     if (DEBUG) {
-                        System.out.println("\nUndirected OutNode found: "
+                        System.out.println("\nUndirected OutNodes found: "
                                 + index + ", " + node);
                     }
                 }
             }
         }
-        // loop through the adjacentNodes and remove any duplicate values.
-        for (int index = 0; index < adjacentNodes.size(); ++index) {
-            for (int ptr = index + 1; ptr < adjacentNodes.size(); ++ptr) {
-                while (adjacentNodes.get(index).equals(adjacentNodes.get(ptr))) {
+        // loop through the list of Nodes and remove any duplicate values.
+        for (int index = 0; index < outNodes.size(); ++index) {
+            for (int ptr = index + 1; ptr < outNodes.size(); ++ptr) {
+                while (outNodes.get(index).equals(outNodes.get(ptr))) {
                     if (DEBUG) {
                         System.out.println("Duplicate Removed: "
-                                + adjacentNodes + "   Removing index [" + ptr + "]");
+                                + outNodes + "   Removing index [" + ptr + "]");
                     }
-                    adjacentNodes.remove(ptr);
-                    if (ptr >= adjacentNodes.size()) {
+                    outNodes.remove(ptr);
+                    if (ptr >= outNodes.size()) {
                         break;
                     }
                 }
             }
         }
-        return adjacentNodes;
+        return outNodes;
     }
 
-    // Returns all nodes on an incoming edge (in-edge) from the given
-    // node. For an undirected graph, this method returns the same nodes
-    // as adjacent.
+
+    /**
+     * Purpose: Finds all out and in nodes for a given node. The
+     *          matrix is checked using a for loop that checks
+     *          the possible node matches via the matrix column
+     *          and row index. If a value is stored in that matrix
+     *          address, the node index is added to a list. After
+     *          all possible adjacent nodes are found, the list is
+     *          looped through to delete any duplicate values. The
+     *          cleaned list is then returned.
+     *  NOTE: This method returns the same number of nodes in a list
+     *        as the adjacent method.
+     * @param node Integer index of the node to be checked for
+     *             adjacent nodes.
+     * @return List of in nodes.
+     */
     public List<Integer> inNodes(int node) {
-        // TODO: fix the test and the undirected functionality.
-        List<Integer> adjacentNodes = new ArrayList<>();
+        List<Integer> inNodes = new ArrayList<>();
         for (int index = 0; index < matrix.length; ++index) {
             if (directed) {
                 if (hasEdge(index, node)) {
-                    adjacentNodes.add(index);
+                    inNodes.add(index);
                     if (DEBUG) {
                         System.out.println("\nInNode found: "
                                 + node);
                     }
                 }
-                if (hasEdge(node, index)) {
-                    adjacentNodes.add(index);
-                    if (DEBUG) {
-                        System.out.println("\nOutNode found: "
-                                + node);
-                    }
-                }
             } else { // Undirected
-                if (hasEdge(node, index)) {
-                    adjacentNodes.add(index);
-                    adjacentNodes.add(node);
+                if (hasEdge(index, node)) {
+                    inNodes.add(index);
                     if (DEBUG) {
-                        System.out.println("\nNode found: "
+                        System.out.println("\nInNodes found: "
                                 + index + ", " + node);
                     }
                 }
             }
         }
         // loop through the adjacentNodes and remove any duplicate values.
-        for (int ptr = 0; ptr < adjacentNodes.size(); ++ptr) {
-            for (int index = ptr + 1; index < adjacentNodes.size(); ++index) {
-                if (adjacentNodes.get(ptr).equals(adjacentNodes.get(index))) {
+        for (int index = 0; index < inNodes.size(); ++index) {
+            for (int ptr = index + 1; ptr < inNodes.size(); ++ptr) {
+                while (inNodes.get(index).equals(inNodes.get(ptr))) {
                     if (DEBUG) {
-                        System.out.println("\nList Duplicate found: "
-                                + adjacentNodes.get(index));
+                        System.out.println("Duplicate Removed: "
+                                + inNodes + "   Removing index [" + ptr + "]");
                     }
-                    //noinspection SuspiciousListRemoveInLoop
-                    adjacentNodes.remove(index);
+                    inNodes.remove(ptr);
+                    if (ptr >= inNodes.size()) {
+                        break;
+                    }
                 }
             }
         }
-        return adjacentNodes;
+        return inNodes;
     }
 
 

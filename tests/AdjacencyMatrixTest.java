@@ -268,16 +268,18 @@ public class AdjacencyMatrixTest {
         }
     }
 
+    // Test empty graphs, full graphs and exclusively odd node value
+    // graphs for proper size
     @Test
     public void checkInNodesDirectedGraph() throws Exception {
-        int n = 10;
+        int n = 20;
         int l = 1;
-        List<Integer> adj = new ArrayList<>();
+        List<Integer> inNodes = new ArrayList<>();
         Graph<Integer> g = new AdjacencyMatrix<>(n, true);
 
         // Check empty graph
-        adj = g.adjacent(0);
-        assertEquals(0,adj.size());
+        inNodes = g.inNodes(0);
+        assertEquals(0,inNodes.size());
 
         // Check full graph
         // fill so every node points to every other node, including itself
@@ -287,9 +289,9 @@ public class AdjacencyMatrixTest {
             }
         }
         for (int index = 0; index < n; ++index) {
-            adj = g.adjacent(index);
+            inNodes = g.inNodes(index);
             // should return every node except self pointing nodes.
-            assertEquals(n, adj.size());
+            assertEquals(n, inNodes.size());
         }
 
         // unique graph missing even nodes
@@ -302,11 +304,11 @@ public class AdjacencyMatrixTest {
         }
         for (int index = 0; index < n; index++) {
             if (index % 2 == 0) {
-                adj = g.adjacent(index);
-                assertEquals(n / 2, adj.size());
+                inNodes = g.inNodes(index);
+                assertEquals(n / 2, inNodes.size());
             } else {
-                adj = g.adjacent(index);
-                assertEquals(n, adj.size());
+                inNodes = g.inNodes(index);
+                assertEquals(n, inNodes.size());
             }
         }
     }
@@ -482,7 +484,7 @@ public class AdjacencyMatrixTest {
         for (int index = 0; index < n; index++) {
             if (index % 2 == 0) {
                 outNodes = g.outNodes(index);
-                assertEquals((n - (n / 2)) + 1, outNodes.size());
+                assertEquals(n - (n / 2), outNodes.size());
             } else {
                 outNodes = g.outNodes(index);
                 assertEquals(n, outNodes.size());
@@ -493,29 +495,45 @@ public class AdjacencyMatrixTest {
     @Test
     public void checkInNodesUndirectedGraph() throws Exception {
         // TODO: finish this test
-        int n = 10;
-        int l = 42;
-        ArrayList<Integer> list = new ArrayList<>();
+        int n = 4;
+        int l = 1;
+        List<Integer> inNodes = new ArrayList<>();
         Graph<Integer> g = new AdjacencyMatrix<>(n, false);
 
-        // fill with 10 incremented ints to test first row of graph.
-        for (int i = 1; i < 10; ++i)
-            list.add(i);
+        // Check empty graph
+        inNodes = g.inNodes(0);
+        assertEquals(0,inNodes.size());
 
-        // fill the graph with edges.
-        for (int u = 0; u < n; ++u) {
-            for (int v = u + 1; v < n; ++v) {
-                g.add(u, l, v);
-                assertEquals(l, g.label(u, v).intValue());
-                assertEquals(l, g.label(v, u).intValue());
+        // Check full graph
+        // fill so every node points to every other node, including itself
+        for (int row = 0; row < n; ++row) {
+            for (int column = 0; column < n; ++column) {
+                g.add(row, l++, column);
             }
         }
-        assertEquals(list,g.outNodes(0));
-        // List must shift right one integer value for opposite
-        // side of matrix
-        list.remove(8);
-        list.add(0, 0);
-        assertEquals(list, g.outNodes(9));
+        for (int index = 0; index < n; ++index) {
+            inNodes = g.inNodes(index);
+            // should return every node except self pointing nodes.
+            assertEquals(n, inNodes.size());
+        }
+
+        // unique graph missing even nodes
+        for (int row = 0; row < n; row++) {
+            for (int column = 0; column < n; column++) {
+                if ((row % 2 == 0 && column % 2 == 0)) {
+                    g.remove(row, column);
+                }
+            }
+        }
+        for (int index = 0; index < n; index++) {
+            if (index % 2 == 0) {
+                inNodes = g.inNodes(index);
+                assertEquals((n - (n / 2)), inNodes.size());
+            } else {
+                inNodes = g.inNodes(index);
+                assertEquals(n, inNodes.size());
+            }
+        }
     }
 
 }
