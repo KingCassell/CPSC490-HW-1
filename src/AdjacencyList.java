@@ -2,7 +2,7 @@
  * File: AdjacencyList.java
  * Date: Spring 2022
  * Auth: Dustin Cassell
- * Desc: Class for all of the adjacency list functionality for graphs
+ * Desc: Class for a list implementation of a graph.
  */
 
 
@@ -59,9 +59,13 @@ public class AdjacencyList<T> implements Graph<T> {
   //--------------------------------------------------------------------
 
   // Returns true if the graph is directed and false if undirected.
+
+  /**
+   * Purpose: Generic getter for the field boolean directed.
+   * @return true if the graph is directed, otherwise false.
+   */
   public boolean directed() {
-    // TODO: finish this method
-    return false;
+    return directed;
   }
 
   // Adds a labeled edge to the graph from node1 to node2. Only adds

@@ -1,8 +1,8 @@
 /*
  * File: AdjacencyListTest.java
  * Date: Spring 2022
- * Auth: 
- * Desc: 
+ * Auth: Dustin Cassell
+ * Desc: Tests for a list approach to graph implementation
  */
 
 import static org.junit.Assert.assertEquals;
