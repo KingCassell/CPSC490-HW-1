@@ -98,27 +98,51 @@ public class AdjacencyList<T> implements Graph<T> {
     public void set(int node1, T label, int node2) {
         // TODO: finish this method
         if (directed) {
-            if (!adjList[node1].isEmpty() && !adjList[node2].isEmpty()) {
+            if (adjList[node1].get(node2) != null) {
                 // if node 1 and 2 exists, the label will be changed
                 adjList[node1].put(node2, label);
                 adjList[node2].put(node1, label);
             }
         } else { // Undirected graph
-
+            if (adjList[node1].get(node2) != null && adjList[node2].get(node1) != null) {
+                // if node 1 and 2 exists, the label will be changed
+                adjList[node1].put(node2, label);
+                adjList[node2].put(node1, label);
+            }
         }
     }
 
-    // Returns the label on the give edge.
-    // Pre: the edge exists
+
+    /**
+     * Purpose: Generic Getter for the label attribute between Node 1
+     *          and Node 2. Directionality is intended to be from Node 1
+     *          to Node 2. For Undirected Graphs, the order of Nodes does
+     *          not matter.
+     * @param node1 Starting Node to be checked if directional. If undirected,
+     *              order doesn't matter.
+     * @param node2 Ending Node to be checked if directional. If undirected,
+     *              order doesn't matter.
+     * @return Type T label object stored between Node 1 and Node 2.
+     */
     public T label(int node1, int node2) {
         return adjList[node1].get(node2);
     }
 
-    // Returns true if the graph contains an edge from node1 to node2
-    // and false otherwise. Note that if the graph is undirected, no
-    // directionality is implied by the edge.
+
+    /**
+     * Purpose: if the provided nodes have an edge from node 1 to node 2
+     *          this method will return true. This works for both directed
+     *          and undirected because if it is directed, the only direction
+     *          to be checked is from node 1 to node 2. If it is an
+     *          undirected graph, the order of nodes will not matter.
+     * @param node1 Starting Node to be checked if directional. If undirected,
+     *              order doesn't matter.
+     * @param node2 Ending Node to be checked if directional. If undirected,
+     *              order doesn't matter.
+     * @return True if there is a non-null object stored in the label between
+     *         Node 1 and Node 2.
+     */
     public boolean hasEdge(int node1, int node2) {
-        // TODO: finish this method
         return adjList[node1].get(node2) != null;
     }
 
