@@ -103,7 +103,7 @@ public class AdjacencyList<T> implements Graph<T> {
                 adjList[node1].put(node2, label);
                 adjList[node2].put(node1, label);
             }
-        } else {
+        } else { // Undirected graph
 
         }
     }
@@ -119,7 +119,7 @@ public class AdjacencyList<T> implements Graph<T> {
     // directionality is implied by the edge.
     public boolean hasEdge(int node1, int node2) {
         // TODO: finish this method
-        return false;
+        return adjList[node1].get(node2) != null;
     }
 
     // Returns all nodes adjacent to the given node. In a directed
