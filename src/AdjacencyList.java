@@ -107,7 +107,6 @@ public class AdjacencyList<T> implements Graph<T> {
      * @param node2 The ending node if the graph is directed.
      */
     public void remove(int node1, int node2) {
-        // TODO: finish this method
         if (directed) {
             if (adjList[node1].get(node2) != null) {
                 // if graph is directed and has a node associated with node 1
