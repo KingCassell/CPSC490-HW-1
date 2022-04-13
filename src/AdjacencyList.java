@@ -68,11 +68,16 @@ public class AdjacencyList<T> implements Graph<T> {
         return directed;
     }
 
-    // Adds a labeled edge to the graph from node1 to node2. Only adds
-    // the edge if valid nodes are given and the edge doesn't already
-    // exist.
+
+    /**
+     * Purpose: Adds a labeled edge to the graph from node1 to node2 if a directed graph.
+     *          This method only adds the edges if there is no data already inserted into
+     *          the list.
+     * @param node1 The starting node if it's a directed graph.
+     * @param label The data of type T to be stored as the label for the edge.
+     * @param node2 The ending node if it's a directed graph.
+     */
     public void add(int node1, T label, int node2) {
-        // TODO: finish this method
         if (directed) {
             if (adjList[node1].get(node2) == null) {
                 // if graph is directed and node1 is empty,
