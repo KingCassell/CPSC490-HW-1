@@ -376,8 +376,11 @@ public class AdjacencyListTest {
         assertEquals(0, g.edgeCount());
         int l = 1; // label
         for (int u = 0; u < n; ++u)
-            for (int v = u + 1; v < n; ++v)
+            for (int v = u + 1; v < n; ++v) {
+                System.out.print(l);
                 g.add(u, l++, v);
+            }
+        System.out.println();
         // check edge count
         assertEquals((n*(n-1))/2, g.edgeCount());
         // check edge labels

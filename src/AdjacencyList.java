@@ -74,16 +74,23 @@ public class AdjacencyList<T> implements Graph<T> {
     public void add(int node1, T label, int node2) {
         // TODO: finish this method
         if (directed) {
-            // check if edge already exists assuming the start is node1 for directed
-            if (adjList[node1].isEmpty()) {
-                // if the nodes are valid nodes
+            if (adjList[node1].get(node2) == null) {
+                // if graph is directed and node1 is empty,
+                // add node2 as connected to node1.
                 adjList[node1].put(node2, label);
+                ++edgeCount;
+            } else {
+                System.out.println("Node1 is already empty");
             }
         } else {
-            // check if edge already exists
-            if (adjList[node1].isEmpty() && adjList[node2].isEmpty()) {
+            if (adjList[node1].get(node2) == null) {
+                // if graph is undirected and has any node info stored inside,
+                // add both node1 and node2 data.
                 adjList[node1].put(node2, label);
                 adjList[node2].put(node1, label);
+                ++edgeCount;
+            } else {
+                System.out.println("Node1 is already empty");
             }
         }
     }
@@ -91,6 +98,25 @@ public class AdjacencyList<T> implements Graph<T> {
     // Removes an edge from the graph if it exists
     public void remove(int node1, int node2) {
         // TODO: finish this method
+        if (directed) {
+            if (adjList[node1].get(node2) != null) {
+                // if graph is directed and has a node associated with node 1
+                adjList[node1].remove(node2);
+                --edgeCount;
+            } else {
+                System.out.println("Node1 is already empty");
+            }
+        } else {
+            if (adjList[node1].get(node2) != null) {
+                // if graph is undirected and has any node info stored inside,
+                // remove both node1 and node2 data.
+                adjList[node1].remove(node2);
+                adjList[node2].remove(node1);
+                --edgeCount;
+            } else {
+                System.out.println("Node1 is already empty");
+            }
+        }
     }
 
     // Updates the label for a given edge. If the edge does not exist,
@@ -98,17 +124,12 @@ public class AdjacencyList<T> implements Graph<T> {
     public void set(int node1, T label, int node2) {
         // TODO: finish this method
         if (directed) {
-            if (adjList[node1].get(node2) != null) {
-                // if node 1 and 2 exists, the label will be changed
-                adjList[node1].put(node2, label);
-                adjList[node2].put(node1, label);
-            }
-        } else { // Undirected graph
-            if (adjList[node1].get(node2) != null && adjList[node2].get(node1) != null) {
-                // if node 1 and 2 exists, the label will be changed
-                adjList[node1].put(node2, label);
-                adjList[node2].put(node1, label);
-            }
+            // Directionality assumed from node1 to node2 from calling function.
+            adjList[node1].put(node2, label);
+        } else {
+            // if undirected add label to both edges.
+            adjList[node1].put(node2, label);
+            adjList[node2].put(node1, label);
         }
     }
 
