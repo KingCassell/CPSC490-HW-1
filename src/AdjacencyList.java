@@ -128,12 +128,17 @@ public class AdjacencyList<T> implements Graph<T> {
         }
     }
 
-    // Updates the label for a given edge. If the edge does not exist,
-    // the edge is not added.
+
+    /**
+     * Purpose: Sets the label on the edge from node1 to node2 if the graph is directed. If
+     *          not directed, both directions get the same label added to their edges.
+     * @param node1 The starting node if it's a directed graph.
+     * @param label The data of type T to be stored as the label for the edge.
+     * @param node2 The ending node if it's a directed graph.
+     */
     public void set(int node1, T label, int node2) {
-        // TODO: finish this method
         if (directed) {
-            // Directionality assumed from node1 to node2 from calling function.
+            // Directionality is assumed to be from node1 to node2.
             adjList[node1].put(node2, label);
         } else {
             // if undirected add label to both edges.
