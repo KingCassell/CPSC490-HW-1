@@ -100,7 +100,12 @@ public class AdjacencyList<T> implements Graph<T> {
         }
     }
 
-    // Removes an edge from the graph if it exists
+
+    /**
+     * Purpose: Removes and edge from the graph if an edge exists between node1 and node2.
+     * @param node1 The starting node if the graph is directed.
+     * @param node2 The ending node if the graph is directed.
+     */
     public void remove(int node1, int node2) {
         // TODO: finish this method
         if (directed) {
