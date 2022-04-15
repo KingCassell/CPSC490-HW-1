@@ -186,7 +186,24 @@ public class AdjacencyList<T> implements Graph<T> {
     // edges, i.e., that lie on out-edges and in-edges.
     public List<Integer> adjacent(int node) {
         // TODO: finish this method
-        return null;
+        List<Integer> nodesList = new ArrayList<>();
+        if (directed) {
+            for (int index = 0; index < nodeCount; index++) {
+                if (adjList[node].containsKey(index) &&
+                        adjList[index].containsKey(node)&&
+                        !nodesList.contains(index)) {
+                    nodesList.add(index);
+                }
+            }
+        } else {
+            for (int index = 0; index < nodeCount; index++) {
+                if (adjList[node].containsKey(index) && !nodesList.contains(index)) {
+                    // if the node index is stored in the map and not already added to the nodesList.
+                    nodesList.add(index);
+                }
+            }
+        }
+        return nodesList;
     }
 
 
