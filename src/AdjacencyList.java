@@ -189,9 +189,6 @@ public class AdjacencyList<T> implements Graph<T> {
         return null;
     }
 
-    // Returns all nodes on an outgoing edge (out-edge) from the given
-    // node. For an undirected graph, this method returns the same nodes
-    // as adjacent.
 
     /**
      * Purpose: Creates a list of integer keys for every out going node from the
@@ -200,8 +197,9 @@ public class AdjacencyList<T> implements Graph<T> {
      *          the map, and it is not already stored in the out nodes list, the key
      *          index is added to the out nodes list. The method then returns the list
      *          of outgoing nodes.
-     * @param node The key index of the node to be checked for outgoing nodes.
-     * @return A list of integer keys for all the nodes outgoing from the node parameter.
+     * @param node The key index of the node to be checked for outgoing node edges.
+     * @return A list of integer keys for all the nodes outgoing edges from the node
+     *         parameter.
      */
     public List<Integer> outNodes(int node) {
         List<Integer> nodesList = new ArrayList<>();
@@ -214,12 +212,28 @@ public class AdjacencyList<T> implements Graph<T> {
         return nodesList;
     }
 
-    // Returns all nodes on an incoming edge (in-edge) from the given
-    // node. For an undirected graph, this method returns the same nodes
-    // as adjacent.
+
+    /**
+     * Purpose: Creates a list of integer keys for every incoming node edge from the
+     *          adjacency list. The method loops through the adjacency list and checks
+     *          every node stored in the hash map. If there is a node key that sends an
+     *          edge to the parameter node, and it is not already stored in the out
+     *          nodes list, the key index is added to the out nodes list. The method
+     *          then returns the list of outgoing nodes.
+     * @param node The key index of the node to be checked for incoming node edges.
+     * @return A list of integer keys for all the nodes outgoing edges from the node
+     *         parameter.
+     */
     public List<Integer> inNodes(int node) {
-        // TODO: finish this method
-        return null;
+        List<Integer> nodesList = new ArrayList<>();
+        for (int index = 0; index < nodeCount; ++index) {
+            if (adjList[index].containsKey(node) && !nodesList.contains(index)) {
+                // if the node index has the parameter node stored in its hash map
+                // and not already added to the nodesList.
+                nodesList.add(index);
+            }
+        }
+        return nodesList;
     }
 
     /**
