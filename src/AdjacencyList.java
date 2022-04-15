@@ -181,17 +181,22 @@ public class AdjacencyList<T> implements Graph<T> {
         return adjList[node1].get(node2) != null;
     }
 
-    // Returns all nodes adjacent to the given node. In a directed
-    // graph, this includes the set of nodes on outgoing and incoming
-    // edges, i.e., that lie on out-edges and in-edges.
+
+    /**
+     * Purpose: Finds all incoming and outgoing edges for the passed in node. If it's a directed,
+     *          graph, Both the in and out nodes are checked to find adjacency. If the graph is
+     *          undirected, onlty the outgoing edges are checked since directionality doesn't matter.
+     * @param node The node to be checked for adjacent node edges
+     * @return A List of Integer values for the nodes that are adjacent to the passed in node.
+     */
     public List<Integer> adjacent(int node) {
-        // TODO: finish this method
         List<Integer> nodesList = new ArrayList<>();
         if (directed) {
             for (int index = 0; index < nodeCount; index++) {
-                if (adjList[node].containsKey(index) &&
-                        adjList[index].containsKey(node)&&
+                if ((adjList[node].containsKey(index) ||
+                        adjList[index].containsKey(node) )&&
                         !nodesList.contains(index)) {
+                    // check if either incoming or outgoing edges exist on the parameter node.
                     nodesList.add(index);
                 }
             }
