@@ -85,7 +85,7 @@ public class AdjacencyList<T> implements Graph<T> {
                 adjList[node1].put(node2, label);
                 ++edgeCount;
             } else {
-                System.out.println("Node1 is already empty");
+                System.out.println("Invalid Add: " + node1 + " already contains edge");
             }
         } else {
             if (adjList[node1].get(node2) == null) {
@@ -95,7 +95,7 @@ public class AdjacencyList<T> implements Graph<T> {
                 adjList[node2].put(node1, label);
                 ++edgeCount;
             } else {
-                System.out.println("Node1 is already empty");
+                System.out.println("Invalid Add: " + node1 + " already contains edge");
             }
         }
     }
@@ -113,7 +113,7 @@ public class AdjacencyList<T> implements Graph<T> {
                 adjList[node1].remove(node2);
                 --edgeCount;
             } else {
-                System.out.println("Node1 is already empty");
+                System.out.println("Invalid Remove: " + node1 + " is already null");
             }
         } else {
             if (adjList[node1].get(node2) != null) {
@@ -123,7 +123,7 @@ public class AdjacencyList<T> implements Graph<T> {
                 adjList[node2].remove(node1);
                 --edgeCount;
             } else {
-                System.out.println("Node1 is already empty");
+                System.out.println("Invalid Remove: " + node1 + " is already null");
             }
         }
     }
@@ -192,9 +192,26 @@ public class AdjacencyList<T> implements Graph<T> {
     // Returns all nodes on an outgoing edge (out-edge) from the given
     // node. For an undirected graph, this method returns the same nodes
     // as adjacent.
+
+    /**
+     * Purpose: Creates a list of integer keys for every out going node from the
+     *          adjacency list. The method loops through the adjacency list and checks
+     *          every node stored in the hash map. If there is a node key stored in
+     *          the map, and it is not already stored in the out nodes list, the key
+     *          index is added to the out nodes list. The method then returns the list
+     *          of outgoing nodes.
+     * @param node The key index of the node to be checked for outgoing nodes.
+     * @return A list of integer keys for all the nodes outgoing from the node parameter.
+     */
     public List<Integer> outNodes(int node) {
-        // TODO: finish this method
-        return null;
+        List<Integer> nodesList = new ArrayList<>();
+        for (int index = 0; index < nodeCount; ++index) {
+            if (adjList[node].containsKey(index) && !nodesList.contains(index)) {
+                // if the node index is stored in the map and not already added to the nodesList.
+                nodesList.add(index);
+            }
+        }
+        return nodesList;
     }
 
     // Returns all nodes on an incoming edge (in-edge) from the given
