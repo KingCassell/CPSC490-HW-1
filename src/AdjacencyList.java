@@ -185,7 +185,7 @@ public class AdjacencyList<T> implements Graph<T> {
     /**
      * Purpose: Finds all incoming and outgoing edges for the passed in node. If it's a directed,
      *          graph, Both the in and out nodes are checked to find adjacency. If the graph is
-     *          undirected, onlty the outgoing edges are checked since directionality doesn't matter.
+     *          undirected, only the outgoing edges are checked since directionality doesn't matter.
      * @param node The node to be checked for adjacent node edges
      * @return A List of Integer values for the nodes that are adjacent to the passed in node.
      */
